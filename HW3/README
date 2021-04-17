@@ -1,1 +1,5 @@
-
+11分类
+training文件夹中: 少部分标注, 大部分没有标注
+semi的实现思路:
+model(x)-->softmax得到概率分布(batch_size * 11)-->max(dim=-1)
+若 max(dim = -1) > 某个超参数 则认为它是正确的, 加一个伪标签, 打到训练集里.
