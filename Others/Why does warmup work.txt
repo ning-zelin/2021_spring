@@ -1,6 +1,14 @@
-As the other answers already state: Warmup steps are just a few updates with low learning rate before / at the beginning of training. After this warmup, you use the regular learning rate (schedule) to train your model to convergence.
+As the other answers already state: Warmup steps are just a few updates with low learning rate 
+before / at the beginning of training. After this warmup, you use the regular learning rate (schedule) 
+to train your model to convergence.
 
-The idea that this helps your network to slowly adapt to the data intuitively makes sense. However, theoretically, the main reason for warmup steps is to allow adaptive optimisers (e.g. Adam, RMSProp, ...) to compute correct statistics of the gradients. Therefore, a warmup period makes little sense when training with plain SGD.
+The idea that this helps your network to slowly adapt to the data intuitively makes sense. However,
+theoretically, the main reason for warmup steps is to allow adaptive optimisers (e.g. Adam, RMSProp, ...)
+to compute correct statistics of the gradients. Therefore, a warmup period makes little sense when training with plain SGD.
 
-E.g. RMSProp computes a moving average of the squared gradients to get an estimate of the variance in the gradients for each parameter. For the first update, the estimated variance is just the square root of the sum of the squared gradients for the first batch. Since, in general, this will not be a good estimate, your first update could push your network in a wrong direction. To avoid this problem, you give the optimiser a few steps to estimate the variance while making as little changes as possible (low learning rate) and only when the estimate is reasonable, you use the actual (high) learning rate.
+E.g. RMSProp computes a moving average of the squared gradients to get an estimate of the variance in the gradients for
+each parameter. For the first update, the estimated variance is just the square root of the sum of the squared gradients
+for the first batch. Since, in general, this will not be a good estimate, your first update could push your network in a 
+wrong direction. To avoid this problem, you give the optimiser a few steps to estimate the variance while making as little 
+changes as possible (low learning rate) and only when the estimate is reasonable, you use the actual (high) learning rate.
 
